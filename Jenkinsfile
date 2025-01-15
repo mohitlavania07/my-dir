@@ -50,10 +50,10 @@ pipeline {
         //         sh "trivy fs --format table -o trivy-fs-report.html ."
         //     }
         // }
-        stage(Deploy){
-            steps{
-                sh "docker-compose up -d --build "
-            }
-        }
+        // stage(Deploy){
+        //     steps{
+        //         sh "docker-compose up -d --build "
+        //     }
+        // }
     }
 }
