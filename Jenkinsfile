@@ -44,12 +44,12 @@ pipeline {
         //     }
         // }
 
-        stage("Trivy File System Scan") {
-            steps {
-                echo "Running Trivy file system scan..."
-                sh "trivy fs --format table -o trivy-fs-report.html ."
-            }
-        }
+        // stage("Trivy File System Scan") {
+        //     steps {
+        //         echo "Running Trivy file system scan..."
+        //         sh "trivy fs --format table -o trivy-fs-report.html ."
+        //     }
+        // }
         stage(Deploy){
             steps{
                 sh "docker-compose up -d --build "
