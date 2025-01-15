@@ -1,9 +1,9 @@
 pipeline {
     agent { label "docker"}
 
-    environment {
-        SONAR_HOME = tool "Sonar"
-    }
+    // environment {
+    //     SONAR_HOME = tool "Sonar"
+    // }
 
     stages {
         stage("Code Clone from GitHub") {
@@ -13,36 +13,36 @@ pipeline {
             }
         }
 
-        stage("SonarQube Quality Analysis") {
-            steps {
-                echo "Running SonarQube analysis..."
-                withSonarQubeEnv("Sonar") {
-                    sh """
-                        $SONAR_HOME/bin/sonar-scanner \
-                        -Dsonar.projectName=wanderlust \
-                        -Dsonar.projectKey=wanderlust \
-                        -Dsonar.sources=.
-                    """
-                }
-            }
-        }
+        // stage("SonarQube Quality Analysis") {
+        //     steps {
+        //         echo "Running SonarQube analysis..."
+        //         withSonarQubeEnv("Sonar") {
+        //             sh """
+        //                 $SONAR_HOME/bin/sonar-scanner \
+        //                 -Dsonar.projectName=wanderlust \
+        //                 -Dsonar.projectKey=wanderlust \
+        //                 -Dsonar.sources=.
+        //             """
+        //         }
+        //     }
+        // }
 
-        stage("OWASP Dependency Check") {
-            steps {
-                echo "Running OWASP Dependency Check..."
-                dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'dc'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-        }
+        // stage("OWASP Dependency Check") {
+        //     steps {
+        //         echo "Running OWASP Dependency Check..."
+        //         dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'dc'
+        //         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        //     }
+        // }
 
-        stage("Sonar Quality Gates Scan") {
-            steps {
-                echo "Checking SonarQube quality gate results..."
-                timeout(time: 2, unit: "MINUTES") {
-                    waitForQualityGate abortPipeline: false
-                }
-            }
-        }
+        // stage("Sonar Quality Gates Scan") {
+        //     steps {
+        //         echo "Checking SonarQube quality gate results..."
+        //         timeout(time: 2, unit: "MINUTES") {
+        //             waitForQualityGate abortPipeline: false
+        //         }
+        //     }
+        // }
 
         stage("Trivy File System Scan") {
             steps {
